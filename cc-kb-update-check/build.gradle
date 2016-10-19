@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.1.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+repositories {
+    jcenter()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+    compile("org.springframework:spring-web")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+	compile("org.springframework:spring-context-support")
+	compile("javax.mail:mail:1.4.7")
+}
