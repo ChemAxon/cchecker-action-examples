@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+    baseName = 'cc-file-api-client'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter")
+
+    compile("org.springframework:spring-web")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("com.h2database:h2")
+    
+    compile("com.google.guava:guava:25.1-jre")	
+    
+    testCompile("junit:junit")
+}
+
+task ccbootjar(type: Copy, dependsOn: [bootJar]) {
+    from "src/main/resources/"
+    into "build/libs/config"
+    include "application.properties"
+    group "build"
+    description = "Assembles an executable jar archive containing the main classes and their dependencies. Copies the configuration file next to the jar in folder 'config'."
+}
