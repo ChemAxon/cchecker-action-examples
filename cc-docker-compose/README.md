@@ -18,5 +18,8 @@ You also need to install the Compliance Checker docker images. See instructions 
 - To access the web UI navigate to: http://localhost:8080/cc-web
 - To access the API endpoints navigate to: http://localhost:8066/cc-api
 
+# How to stop
+- Execute command: `docker-compose down`
+
 # Configure
 To configure Compliance Checker edit config file: ./cc-config/config/application.properties. Documentation on configuration options can be found [here](https://docs.chemaxon.com/Configuring_Compliance_Checker.html)
