@@ -5,7 +5,7 @@ This example shows how to start Compliance Checker docker images using docker co
 The followings need to be installed on your system:
 - Docker
 - Docker compose
-- mongo:3.6 docker image (to install execute: `docker pull mongo:3.6`)
+- mongo:3.6 docker image (to install execute: `docker pull mongo:3.6`)<br>
 You also need to install the Compliance Checker docker images. See instructions [here](https://chemaxon.com/products/compliance-checker/download)
 
 # How to run
@@ -16,3 +16,6 @@ You also need to install the Compliance Checker docker images. See instructions 
 # Access the system
 - To access the web UI navigate to: http://localhost:8080/cc-web
 - To access the API endpoints navigate to: http://localhost:8066/cc-api
+
+# Configure
+To configure Compliance Checker edit config file: ./cc-config/config/application.properties. Documentation on configuration options can be found [here](https://docs.chemaxon.com/Configuring_Compliance_Checker.html)
