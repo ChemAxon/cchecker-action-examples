@@ -1,0 +1,97 @@
+---
+version: '2.1'
+services:
+  cc-db:
+    image: 'mongo:3.6'
+    container_name: 'cc-db'
+    ports:
+      - '27017:27017'
+    networks:
+      - cchecker
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'cxnMongo'
+      MONGO_INITDB_ROOT_PASSWORD: 'ccMongoPass'
+      MONGO_INITDB_DATABASE: 'ccDB'
+    command: mongod --bind_ip 0.0.0.0
+    volumes:
+      - './mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro'
+
+  cc-config:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-config:latest'
+    container_name: 'cc-config'
+    hostname: 'cc-config'
+    ports:
+      - '8888:8888'
+    networks:
+      - cchecker
+    volumes:
+      - './cc-config/config/:/app/config'
+    environment:
+      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS: 'file:/app/config'
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: 'http://cc-eureka:8761/eureka/'
+  cc-api:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-api:latest'
+    container_name: 'cc-api'
+    hostname: 'cc-api'
+    ports:
+      - '8066:8066'
+    networks:
+      - cchecker
+    environment:
+      SPRING_CLOUD_CONFIG_URI: 'http://cc-config:8888'
+      CHEMAXON_LICENSE_URL: 'http://cc-license-host.com/license.cxl'
+
+  cc-bigdata:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-bigdata:latest'
+    container_name: 'cc-bigdata'
+    hostname: 'cc-bigdata'
+    ports:
+      - '8082:8082'
+    networks:
+      - cchecker
+    environment:
+      SPRING_CLOUD_CONFIG_URI: 'http://cc-config:8888'
+      CHEMAXON_LICENSE_URL: 'http://cc-license-host.com/license.cxl'
+
+
+  cc-eureka:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-eureka:latest'
+    container_name: 'cc-eureka'
+    hostname: 'cc-eureka'
+    ports:
+      - '8761:8761'
+    networks:
+      - cchecker
+    environment:
+      EUREKA_INSTANCE_HOSTNAME: 'cc-eureka'
+
+
+  cc-web:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-web:latest'
+    container_name: 'cc-web'
+    hostname: 'cc-web'
+    ports:
+      - '8080:8080'
+    networks:
+      - cchecker
+    environment:
+      SPRING_CLOUD_CONFIG_URI: 'http://cc-config:8888'
+      CHEMAXON_LICENSE_URL: 'http://cc-license-host.com/license.cxl'
+
+
+  cc-webservice:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-webservice:latest'
+    container_name: 'cc-webservice'
+    hostname: 'cc-webservice'
+    ports:
+      - '8084:8084'
+    networks:
+      - cchecker
+    environment:
+      SPRING_CLOUD_CONFIG_URI: 'http://cc-config:8888'
+      CHEMAXON_LICENSE_URL: 'http://cc-license-host.com/license.cxl'
+    mem_limit: '4G'
+
+
+networks:
+  cchecker:
