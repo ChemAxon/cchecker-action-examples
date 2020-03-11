@@ -79,8 +79,8 @@ services:
       CHEMAXON_LICENSE_URL: 'http://cc-license-host.com/license.cxl'
 
 
-  cc-webservice:
-    image: 'hub.chemaxon.com/cxn-docker-release/cc-webservice:latest'
+  cc-backend:
+    image: 'hub.chemaxon.com/cxn-docker-release/cc-backend:latest'
     container_name: 'cc-webservice'
     hostname: 'cc-webservice'
     ports:
