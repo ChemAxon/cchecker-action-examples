@@ -81,8 +81,8 @@ services:
 
   cc-backend:
     image: 'hub.chemaxon.com/cxn-docker-release/cc-backend:latest'
-    container_name: 'cc-webservice'
-    hostname: 'cc-webservice'
+    container_name: 'cc-backend'
+    hostname: 'cc-backend'
     ports:
       - '8084:8084'
     networks:
